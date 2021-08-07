@@ -79,7 +79,7 @@ describe("class:RankService", () => {
                 [Rank.FIVE, "Clubs"],
                 [Rank.SIX, "Clubs"]
             ])
-            expect(RankService.rankHand(hand)).toBe(5);
+            expect(RankService.rankHand(hand)).toBe(6);
         });
         it("ranks a full house", () => {
             const hand = toCards([
@@ -99,7 +99,7 @@ describe("class:RankService", () => {
                 [Rank.TWO, "Hearts"],
                 [Rank.TWO, "Diamonds"]
             ])
-            expect(RankService.rankHand(hand)).toBe(4)
+            expect(RankService.rankHand(hand)).toBe(8)
         });
         it("ranks a straight flush", () => {
             const hand = toCards([
@@ -109,7 +109,7 @@ describe("class:RankService", () => {
                 [Rank.FIVE, "Hearts"],
                 [Rank.SIX, "Hearts"]
             ]);
-            expect(RankService.rankHand(hand)).toBe(8);
+            expect(RankService.rankHand(hand)).toBe(9);
         });
         it("ranks a royal flush", () => {
             const hand = toCards([

@@ -83,23 +83,60 @@ export class RankService {
     }
 
     static isRoyalFlush(hand: Card[]): { matchingCards: Card[], match: boolean } {
+        // XXX: does this formatting smell?
+        // why does not checking for a flush here make the ace high test fail?
+        if (this.isStraight(hand).match && 
+            this.isFlush(hand).match && 
+            hand.filter(c => c.rank === Rank.KING).length > 0 && 
+            hand.filter(c => c.rank === Rank.ACE).length > 0) {
+            return { matchingCards: hand, match: true };
+        }
         return { matchingCards: [], match: false };
     }
 
     static isStraightFlush(hand: Card[]): { matchingCards: Card[], match: boolean } {
+        if (this.isStraight(hand).match && this.isFlush(hand).match) {
+            return { matchingCards: hand, match: true };
+        }
         return { matchingCards: [], match: false };
     }
 
     static isFourOfAKind(hand: Card[]): { matchingCards: Card[], match: boolean } {
+        let matches: Card[];
+        for (let i = 0; i < hand.length; i++) {
+            matches = this.matchesInArray(hand, hand[i]);
+            if (matches.length > 3) {
+                return { matchingCards: matches, match: true };
+            }
+        }
         return { matchingCards: [], match: false };
     }
 
     static isFullHouse(hand: Card[]): { matchingCards: Card[], match: boolean } {
-        return { matchingCards: [], match: false };
+        let pairResult = this.isPair(hand);
+        if (pairResult.match) {
+            let filteredHand = hand.filter((card) => !pairResult.matchingCards.includes(card));
+            console.log({ filteredHand });
+            let threeOAKResult = this.isThreeOfAKind(filteredHand);
+            if (threeOAKResult.match) {
+                const matchingCards = pairResult.matchingCards.concat(threeOAKResult.matchingCards);
+                return { matchingCards: matchingCards, match: true };
+            } else {
+                return { matchingCards: [], match: false };
+            }
+        } else {
+            return { matchingCards: [], match: false };
+        }
     }
 
     static isFlush(hand: Card[]): { matchingCards: Card[], match: boolean } {
-        return { matchingCards: [], match: false };
+        const targetSuit = hand[0].suit;
+        const isSameSuit = (card: Card) => card.suit === targetSuit;
+        const match = hand.every(isSameSuit);
+        if (match) {
+            return { matchingCards: hand, match };
+        }
+        return { matchingCards: [], match };
     }
 
     static isStraight(hand: Card[]): { matchingCards: Card[], match: boolean } {
@@ -168,8 +205,6 @@ export class RankService {
     static isTwoPair(hand: Card[]): { matchingCards: Card[], match: boolean } {
         let pairAResult = this.isPair(hand);
         if (pairAResult.match) {
-            //let inHand = hand.includes(pairResult.matchingCards[0]);
-            //console.log(inHand);
             let filteredHand = hand.filter((item) => !pairAResult.matchingCards.includes(item));
             console.log({ filteredHand });
             let pairBResult = this.isPair(filteredHand);
@@ -185,6 +220,11 @@ export class RankService {
     }
 
     static isPair(hand: Card[]): { matchingCards: Card[], match: boolean } {
+        /*
+        const targetNumberOfMatches = 2;
+        return { matchingCards: this.findNumberOfMatches(hand, targetNumberOfMatches), match: false };
+        */
+
         let matches: Card[];
         for (let i = 0; i < hand.length; i++) {
             matches = this.matchesInArray(hand, hand[i]);
@@ -205,10 +245,23 @@ export class RankService {
         return highCard;
     }
 
-    static matchesInArray(array: Card[], target: Card): Card[] {
-        const result = array.filter(card => card.rank == target.rank);
+    static matchesInArray(cards: Card[], target: Card): Card[] {
+        const result = cards.filter(card => card.rank === target.rank);
         return result;
     }
+
+    /*
+    static findNumberOfMatches(cards: Card[], targetNumberOfMatches: number): Card[] {
+        let matches: Card[] = [];
+        for (let i = 0; i < cards.length; i++) {
+            matches = this.matchesInArray(cards, cards[i]);
+            if (matches.length > targetNumberOfMatches) {
+                return matches;
+            }
+        }
+        return matches;
+    }
+    */
 
     static getRandomInt(max: number) {
         return Math.floor(Math.random() * max);
