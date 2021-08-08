@@ -23,12 +23,12 @@ export enum Rank {
     KING,
     ACE
 }
+export const allRanks: Rank[] = Object.values(Rank).filter(v => typeof v === "number") as Rank[];
 
 export class RankService {
     static handSize: number = 5;
 
     static createDeck(): Card[] {
-        const allRanks: Rank[] = Object.values(Rank) as Rank[];
         let deck: Card[] = [];
 
         for (let i = 0; i < allRanks.length; i++) {
@@ -55,7 +55,7 @@ export class RankService {
         return hand;
     }
 
-    static rankHand(hand: Card[]): number {
+    static rankHand(hand: ReadonlyArray<Card>): number {
         let result = 0;
         if (this.isRoyalFlush(hand).match) {
             result = 10;
@@ -79,29 +79,30 @@ export class RankService {
             //this.isHighCard(hand).rank;
             result = 1;
         }
+        console.log({result});
         return result;
     }
 
-    static isRoyalFlush(hand: Card[]): { matchingCards: Card[], match: boolean } {
+    static isRoyalFlush(hand: ReadonlyArray<Card>): { matchingCards: Card[], match: boolean } {
         // XXX: does this formatting smell?
         // why does not checking for a flush here make the ace high test fail?
         if (this.isStraight(hand).match && 
             this.isFlush(hand).match && 
             hand.filter(c => c.rank === Rank.KING).length > 0 && 
             hand.filter(c => c.rank === Rank.ACE).length > 0) {
-            return { matchingCards: hand, match: true };
+            return { matchingCards: [...hand], match: true };
         }
         return { matchingCards: [], match: false };
     }
 
-    static isStraightFlush(hand: Card[]): { matchingCards: Card[], match: boolean } {
+    static isStraightFlush(hand: ReadonlyArray<Card>): { matchingCards: Card[], match: boolean } {
         if (this.isStraight(hand).match && this.isFlush(hand).match) {
-            return { matchingCards: hand, match: true };
+            return { matchingCards: [...hand], match: true };
         }
         return { matchingCards: [], match: false };
     }
 
-    static isFourOfAKind(hand: Card[]): { matchingCards: Card[], match: boolean } {
+    static isFourOfAKind(hand: ReadonlyArray<Card>): { matchingCards: Card[], match: boolean } {
         let matches: Card[];
         for (let i = 0; i < hand.length; i++) {
             matches = this.matchesInArray(hand, hand[i]);
@@ -112,11 +113,11 @@ export class RankService {
         return { matchingCards: [], match: false };
     }
 
-    static isFullHouse(hand: Card[]): { matchingCards: Card[], match: boolean } {
+    static isFullHouse(hand: ReadonlyArray<Card>): { matchingCards: Card[], match: boolean } {
         let pairResult = this.isPair(hand);
         if (pairResult.match) {
             let filteredHand = hand.filter((card) => !pairResult.matchingCards.includes(card));
-            console.log({ filteredHand });
+            //console.log({ filteredHand });
             let threeOAKResult = this.isThreeOfAKind(filteredHand);
             if (threeOAKResult.match) {
                 const matchingCards = pairResult.matchingCards.concat(threeOAKResult.matchingCards);
@@ -129,21 +130,22 @@ export class RankService {
         }
     }
 
-    static isFlush(hand: Card[]): { matchingCards: Card[], match: boolean } {
+    static isFlush(hand: ReadonlyArray<Card>): { matchingCards: Card[], match: boolean } {
         const targetSuit = hand[0].suit;
         const isSameSuit = (card: Card) => card.suit === targetSuit;
         const match = hand.every(isSameSuit);
         if (match) {
-            return { matchingCards: hand, match };
+            const matchingCards = [...hand];
+            return { matchingCards, match };
         }
         return { matchingCards: [], match };
     }
 
-    static isStraight(hand: Card[]): { matchingCards: Card[], match: boolean } {
+    static isStraight(hand: ReadonlyArray<Card>): { matchingCards: Card[], match: boolean } {
         // order hand
         // see if ordered hand matches subset of this.ranks
         const orderedHand = [...hand].sort(this.compareRanks);
-        console.log({ orderedHand });
+        //console.log({ orderedHand });
         let failedStraight = false;
         let hasAce = false;
         for (let i = 1; i < hand.length; i++) {
@@ -179,7 +181,7 @@ export class RankService {
         } else if (failedStraight) {
             return { match: false, matchingCards: [] };
         }
-        return { matchingCards: hand, match: true };
+        return { matchingCards: [...hand], match: true };
     }
 
     static compareRanks(a: Card, b: Card): number {
@@ -191,7 +193,7 @@ export class RankService {
         return 0;
     }
 
-    static isThreeOfAKind(hand: Card[]): { matchingCards: Card[], match: boolean } {
+    static isThreeOfAKind(hand: ReadonlyArray<Card>): { matchingCards: Card[], match: boolean } {
         let matches: Card[];
         for (let i = 0; i < hand.length; i++) {
             matches = this.matchesInArray(hand, hand[i]);
@@ -202,11 +204,11 @@ export class RankService {
         return { matchingCards: [], match: false };
     }
 
-    static isTwoPair(hand: Card[]): { matchingCards: Card[], match: boolean } {
+    static isTwoPair(hand: ReadonlyArray<Card>): { matchingCards: Card[], match: boolean } {
         let pairAResult = this.isPair(hand);
         if (pairAResult.match) {
             let filteredHand = hand.filter((item) => !pairAResult.matchingCards.includes(item));
-            console.log({ filteredHand });
+            //console.log({ filteredHand });
             let pairBResult = this.isPair(filteredHand);
             if (pairBResult.match) {
                 const matchingCards = pairAResult.matchingCards.concat(pairBResult.matchingCards);
@@ -219,7 +221,7 @@ export class RankService {
         }
     }
 
-    static isPair(hand: Card[]): { matchingCards: Card[], match: boolean } {
+    static isPair(hand: ReadonlyArray<Card>): { matchingCards: Card[], match: boolean } {
         /*
         const targetNumberOfMatches = 2;
         return { matchingCards: this.findNumberOfMatches(hand, targetNumberOfMatches), match: false };
@@ -245,7 +247,7 @@ export class RankService {
         return highCard;
     }
 
-    static matchesInArray(cards: Card[], target: Card): Card[] {
+    static matchesInArray(cards: ReadonlyArray<Card>, target: Card): Card[] {
         const result = cards.filter(card => card.rank === target.rank);
         return result;
     }

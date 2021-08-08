@@ -4,7 +4,6 @@ interface SaveButtonProps {
     onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-
 export const SaveButton: FunctionComponent<SaveButtonProps> = ({onClick}) => {
     return <button onClick={onClick}>Save</button>
 }

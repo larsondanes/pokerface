@@ -1,7 +1,13 @@
 import { Card, Rank, RankService } from "./RankService";
 
 describe("class:RankService", () => {
-    describe("static:Rank()", () => {
+    describe("static:createDeck()", () => {
+        it("returns a deck of 52 cards", () => {
+            const deck = RankService.createDeck();
+            expect(deck).toHaveLength(52);
+        });
+    });
+    describe("static:rankHand()", () => {
         it("ranks an ACE high", () => {
             const hand = toCards([
                 [Rank.TWO, "Hearts"],
@@ -10,7 +16,7 @@ describe("class:RankService", () => {
                 [Rank.EIGHT, "Hearts"],
                 [Rank.ACE, "Diamonds"]
             ])
-            expect(RankService.rankHand(hand)).toBe(1)
+            expect(RankService.rankHand(hand)).toBe(1);
         });
         it("ranks a pair", () => {
             const hand = toCards([
