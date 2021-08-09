@@ -1,29 +1,30 @@
 import React from "react";
 import { FunctionComponent } from "react";
-import { Card, Rank } from "./RankService";
+import { Card, HandRank } from "./RankService";
 import "./card.scss";
-import { Suit } from "./Card";
+import { CardRank, getCardRankDisplay, Suit } from "./Card";
+import { RankedHand } from "./RankedHand";
 
 interface HandProps {
   cards: ReadonlyArray<Card>;
-  ranking: number | null;
+  rankedHand: RankedHand | null;
 };
 
 const CardComponent: FunctionComponent<{ card: Card }> = ({ card }) => {
   return <div className="card" key={card.rank + card.suit}>{card.rank} of {card.suit}</div>
 }
 
-const getCardSymbolColumns = (rank: Rank): [number, number, number] => {
-  const cardDisplays: Partial<Record<Rank, [number, number, number]>> = {
-    [Rank.TWO]: [0, 2, 0],
-    [Rank.THREE]: [0, 3, 0],
-    [Rank.FOUR]: [2, 0, 2],
-    [Rank.FIVE]: [2, 1, 2],
-    [Rank.SIX]: [3, 0, 3],
-    [Rank.SEVEN]: [3, 1, 3],
-    [Rank.EIGHT]: [3, 2, 3],
-    [Rank.NINE]: [4, 1, 4],
-    [Rank.TEN]: [4, 2, 4]
+const getCardSymbolColumns = (rank: CardRank): [number, number, number] => {
+  const cardDisplays: Partial<Record<CardRank, [number, number, number]>> = {
+    [CardRank.TWO]: [0, 2, 0],
+    [CardRank.THREE]: [0, 3, 0],
+    [CardRank.FOUR]: [2, 0, 2],
+    [CardRank.FIVE]: [2, 1, 2],
+    [CardRank.SIX]: [3, 0, 3],
+    [CardRank.SEVEN]: [3, 1, 3],
+    [CardRank.EIGHT]: [3, 2, 3],
+    [CardRank.NINE]: [4, 1, 4],
+    [CardRank.TEN]: [4, 2, 4]
   };
   const display = cardDisplays[rank];
   if (display) {
@@ -35,24 +36,7 @@ const getCardSymbolColumns = (rank: Rank): [number, number, number] => {
 
 }
 
-const getCardRankDisplay = (rank: Rank): string => {
-  const faceRankMapping: Partial<Record<Rank, string>> = {
-    [Rank.JACK]: "J",
-    [Rank.QUEEN]: "Q",
-    [Rank.KING]: "K",
-    [Rank.ACE]: "A"
-  }
 
-  // if we have a face rank mapping, return it
-  // otherwise, return the numeric rank as a string
-
-  const faceRank = faceRankMapping[rank];
-  if (faceRank) {
-    return faceRank;
-  } else {
-    return String(rank);
-  }
-}
 
 const getSuitSymbol = (suit: Suit): string => {
   const suitSymbols: Record<Suit, string> = {
@@ -65,7 +49,24 @@ const getSuitSymbol = (suit: Suit): string => {
   return suitSymbols[suit];
 }
 
-export const HandComponent: FunctionComponent<HandProps> = ({ cards, ranking }) => {
+const getHandRankString = (rank: HandRank): string => {
+  const handRankMapping: Record<HandRank, string> = {
+    [HandRank.HIGHCARD]: "High Card",
+    [HandRank.PAIR]: "Pair",
+    [HandRank.TWOPAIR]: "Two Pair",
+    [HandRank.THREEOFAKIND]: "Three of a Kind",
+    [HandRank.STRAIGHT]: "Straight",
+    [HandRank.FLUSH]: "Flush",
+    [HandRank.FULLHOUSE]: "Full House",
+    [HandRank.FOUROFAKIND]: "Four of a Kind",
+    [HandRank.STRAIGHTFLUSH]: "Straight Flush",
+    [HandRank.ROYALFLUSH]: "Royal Flush"
+  }
+
+  return handRankMapping[rank];
+}
+
+export const HandComponent: FunctionComponent<HandProps> = ({ cards, rankedHand }) => {
   let markup: React.ReactElement[] = [];
   //markup.push(<div className={`card card--${card.suit} card--rank-${card.rank}`} ></div>);
 
@@ -121,7 +122,7 @@ export const HandComponent: FunctionComponent<HandProps> = ({ cards, ranking }) 
         cards.map(c => desiredOutputExample(c))
       }
       {
-        (ranking !== null) && <div className="ranking">Ranking: {ranking}</div>
+        (rankedHand !== null) && <div className="handRank">Hand: {rankedHand.getDisplay()}</div>
       }
     </div>
   </>
