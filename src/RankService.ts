@@ -1,9 +1,9 @@
 import * as React from "react";
-import { suits } from "./Card";
+import { Suit, suits } from "./Card";
 
 export interface Card {
     rank: Rank;
-    suit: string;
+    suit: Suit;
 }
 
 // need enum for HandKind: point value

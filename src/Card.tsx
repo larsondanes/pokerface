@@ -2,12 +2,12 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 
 export enum Suit {
-    "heart",
-    "spade",
-    "diamond",
-    "club"
+    Heart = "heart",
+    Spade = "spade",
+    Diamond = "diamond",
+    Club = "club"
 }
-export const suits = ["heart", "spade", "diamond", "club"];
+export const suits = [Suit.Heart, Suit.Spade, Suit.Diamond, Suit.Club];
 // usage: <Card rank={"A"} suit={"Hearts"} />
 interface CardProps {
     rank: string;
@@ -18,5 +18,5 @@ export const Card: FunctionComponent<CardProps> = ({rank, suit}) => {
 }
 
 
-const AceOfHearts = () => <Card rank="A" suit={Suit.heart} />
+const AceOfHearts = () => <Card rank="A" suit={Suit.Heart} />
 
