@@ -1,22 +1,3 @@
-
-.card {
-    height: 300px;
-    width: 200px;
-    border: 1px solid red;
-    box-sizing: border-box;
-    display: inline-block;
-    margin: 5px;
-    text-align: center;
-}
-
-.ranking {
-    margin: 5px;
-}
-
-button {
-    margin: 5px;
-}
-
 $color: #c0c0c0;
 $background: #f0f0f0;
 $gutter: 10px;
@@ -29,6 +10,44 @@ $card-height: 240px;
 $card-color-red: #e44145;
 $card-color-black: #252525;
 $card-symbol-size: 40px;
+
+.card {
+    height: 300px;
+    width: 200px;
+    border: 1px solid red;
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 5px;
+    text-align: center;
+    position: relative;
+
+    .card__topleft,
+    .card__botright {
+        position: absolute;
+        width: 12px;
+        text-align: center;
+        letter-spacing: -2px;
+    }
+
+    .card__topleft {
+        top: $card-padding;
+        left: $card-padding;
+    }
+
+    .card__botright {
+        bottom: $card-padding;
+        right: $card-padding;
+        transform: rotate(180deg)
+    }
+}
+
+.ranking {
+    margin: 5px;
+}
+
+button {
+    margin: 5px;
+}
 
 body {
 	padding: 0;
@@ -54,42 +73,20 @@ body {
 	background: $card-background;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 	
-	&:before,
-	&:after {
-		content: attr(value);
-		position: absolute;
-		width: 12px;
-		text-align: center;
-		letter-spacing: -2px;
-	}
-	
-	&:before {
-		top: $card-padding;
-		left: $card-padding;
-	}
-	
-	&:after {
-		bottom: $card-padding;
-		right: $card-padding;
-		transform: rotate(180deg)
-	}
-	
 	&--heart {
 		color: $card-color-red;
-		
-		&:before,
-		&:after {
-			content: attr(value) ' ♥';
-		}
 	}
 	
 	&--spade {
 		color: $card-color-black;
-		
-		&:before,
-		&:after {
-			content: attr(value) ' ♠';
-		}
+	}
+
+    &--diamond {
+		color: $card-color-red;
+	}
+	
+	&--club {
+		color: $card-color-black;
 	}
 }
 
@@ -111,38 +108,31 @@ body {
 .card__column {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	//justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 	
-	&--centered {
-		justify-content: center;
-	}
+	// &--centered {
+	// 	justify-content: center;
+	// }
+}
+
+.card__column.face {
+    font-size: 72;
 }
 
 .card__symbol {
-	display: inline-block;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+
+	//display: inline-block;
 	height: $card-symbol-size;
 	text-align: center;
 	
-	&:before {
-		font-size: $card-symbol-size;
-		line-height: $card-symbol-size;
-	}
-	
-	.card--heart &:before {
-		content: '♥';
-	}
-	
-	.card--spade &:before {
-		content: '♠';
-	}
-
-    .card--club &:before {
-		content: '♣';
-	}
-	
-	.card--diamond &:before {
-		content: '♦';
-	}
+	font-size: $card-symbol-size;
+	line-height: $card-symbol-size;
 	
 	&--rotated,
 	&:last-of-type {
