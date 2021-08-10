@@ -12,5 +12,5 @@ interface DrawHandButtonProps {
 export const DrawHandButton: FunctionComponent<DrawHandButtonProps> = ({
   onClick,
 }) => {
-  return <button onClick={onClick}>Draw hand</button>;
+  return <button onClick={onClick}>Draw random</button>;
 };
