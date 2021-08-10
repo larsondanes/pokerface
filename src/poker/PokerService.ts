@@ -1,5 +1,5 @@
 import { Card, allRanks, CardRank, suits } from "./Card";
-import { PokerHand, RankedHandFactory } from "./hands/PokerHand";
+import { PokerHand, PokerHandFactory } from "./hands/PokerHand";
 import { TwoPair } from "./hands/TwoPair";
 import { ThreeOfAKind } from "./hands/ThreeOfAKind";
 import { Straight } from "./hands/Straight";
@@ -50,7 +50,6 @@ export const PokerService = {
         deck.push({ rank, suit });
       }
     }
-    console.log(deck);
     return deck;
   },
 
@@ -62,12 +61,10 @@ export const PokerService = {
   drawHand(deck: Card[]): Card[] {
     let hand: Card[] = [];
     for (let i = 0; i < this.handSize; i++) {
-      console.log(deck.length);
       let cardIdx = this.getRandomInt(deck.length - 1);
       let card = deck.splice(cardIdx, 1)[0];
       hand.push(card);
     }
-    console.log(hand);
     return hand;
   },
 
@@ -78,7 +75,7 @@ export const PokerService = {
    * extends RankedHand.
    */
   rankHand(hand: ReadonlyArray<Card>): PokerHand {
-    const RankedHandClasses: RankedHandFactory[] = [
+    const HandClasses: PokerHandFactory[] = [
       RoyalFlush,
       StraightFlush,
       FourOfAKind,
@@ -90,13 +87,13 @@ export const PokerService = {
       Pair,
       HighCard,
     ];
-    // TODO: document this
-    for (const RankedHandClass of RankedHandClasses) {
-      const result = RankedHandClass.from(hand);
+    for (const HandClass of HandClasses) {
+      const result = HandClass.from(hand);
       if (result) {
         return result;
       }
     }
+    // This should not happen because we have HighCard.
     throw new Error("Failed to rank hand");
   },
 

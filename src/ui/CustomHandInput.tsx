@@ -27,7 +27,7 @@ export const CustomHandInput: FunctionComponent<CustomHandInputProps> = ({
       S: Suit.Spade,
     };
 
-    let regexp = /^(([AKQJ]|[2-9]|10)[CSDH]\s*){5}/i;
+    let regexp = /^(([AKQJ]|[2-9]|10)[CSDH]\s*){5}$/i;
     const regexResult = value.match(regexp);
     if (regexResult === null) {
       onError();      
@@ -49,8 +49,8 @@ export const CustomHandInput: FunctionComponent<CustomHandInputProps> = ({
         const rankString = buffer.substr(0, rankLength);
         const suitString = buffer[rankLength];
 
-        const rank: CardRank = faceCards[rankString] || Number(rankString);
-        const suit: Suit = suitMapping[suitString];
+        const rank: CardRank = faceCards[rankString.toUpperCase()] || Number(rankString);
+        const suit: Suit = suitMapping[suitString.toUpperCase()];
         cards.push({ rank, suit });
         buffer = "";
       }

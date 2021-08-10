@@ -25,7 +25,6 @@ export abstract class PokerHand {
   abstract getDisplay(): string;
 }
 
-// TODO: document this
-export interface RankedHandFactory {
+export interface PokerHandFactory {
   from(hand: ReadonlyArray<Card>): PokerHand | null;
 }

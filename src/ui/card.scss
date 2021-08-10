@@ -104,13 +104,8 @@ body {
 .card__column {
   display: flex;
   flex-direction: column;
-  //justify-content: space-between;
   justify-content: center;
   align-items: center;
-
-  // &--centered {
-  // 	justify-content: center;
-  // }
 }
 
 .card__column.face {
@@ -123,7 +118,6 @@ body {
   flex-grow: 1;
   justify-content: center;
 
-  //display: inline-block;
   height: $card-symbol-size;
   text-align: center;
 
