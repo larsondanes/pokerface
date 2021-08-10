@@ -1,5 +1,5 @@
 import { Card, CardRank, getCardRankDisplay, Suit } from "./Card";
-import { HandRank, RankService } from "./RankService";
+import { PokerHandRank, PokerService } from "./PokerService";
 
 const titleCase = (str: string) => str[0].toUpperCase() + str.substr(1);
 
@@ -7,13 +7,16 @@ const titleCase = (str: string) => str[0].toUpperCase() + str.substr(1);
  * Abstract RankedHand outlines a base ranked poker hand object
  * to be extended by specific poker hand objects.
  */
-export abstract class RankedHand {
+export abstract class PokerHand {
   /**
    * Constructor for RankedHand
    * @param handRank The rank of the hand
    * @param matchingCards The cards that match the hand's definition
    */
-  constructor(protected handRank: HandRank, public matchingCards: Card[]) {}
+  constructor(
+    protected handRank: PokerHandRank,
+    public matchingCards: Card[]
+  ) {}
   /**
    * Abstract function that returns a human readable description of a
    * given poker hand includingone or more suits or ranks relevant
@@ -26,7 +29,7 @@ export abstract class RankedHand {
  * Poker hand representing a hand that contains a pair of two
  * same-ranked cards.
  */
-export class Pair extends RankedHand {
+export class Pair extends PokerHand {
   /**
    * Create a Pair ranked hand from a hand of cards if possible.
    * @param hand The hand of cards to extract a pair from
@@ -36,7 +39,7 @@ export class Pair extends RankedHand {
   static from(hand: Card[]): Pair | null {
     let matches: Card[];
     for (let i = 0; i < hand.length; i++) {
-      matches = RankService.matchesInArray(hand, hand[i]);
+      matches = PokerService.matchesInArray(hand, hand[i]);
       if (matches.length > 1) {
         return new Pair(matches);
       }
@@ -66,14 +69,14 @@ export class Pair extends RankedHand {
    * scoring structure of the hand.
    */
   constructor(matchingCards: Card[]) {
-    super(HandRank.PAIR, matchingCards);
+    super(PokerHandRank.PAIR, matchingCards);
   }
 }
 
 /**
  * Poker hand representing a hand that contains a high card.
  */
-export class HighCard extends RankedHand {
+export class HighCard extends PokerHand {
   /**
    * Create a HighCard poker hand from a hand of cards if possible.
    * @param hand The hand of cards to extract HighCard from.
@@ -105,14 +108,14 @@ export class HighCard extends RankedHand {
    * scoring structure of the hand.
    */
   constructor(matchingCards: Card[]) {
-    super(HandRank.HIGHCARD, matchingCards);
+    super(PokerHandRank.HIGHCARD, matchingCards);
   }
 }
 
 /**
  * Poker hand representing a hand that contains a royal flush.
  */
-export class RoyalFlush extends RankedHand {
+export class RoyalFlush extends PokerHand {
   /**
    * Create a RoyalFlush poker hand from a hand of cards if possible.
    * @param hand The hand of cards to extract RoyalFlush from.
@@ -154,14 +157,14 @@ export class RoyalFlush extends RankedHand {
    * scoring structure of the hand.
    */
   constructor(matchingCards: Card[]) {
-    super(HandRank.ROYALFLUSH, matchingCards);
+    super(PokerHandRank.ROYALFLUSH, matchingCards);
   }
 }
 
 /**
  * Poker hand representing a hand that contains a straight flush.
  */
-export class StraightFlush extends RankedHand {
+export class StraightFlush extends PokerHand {
   /**
    * Create a StraightFlush poker hand from a hand of cards if possible.
    * @param hand The hand of cards to extract StraightFlush from.
@@ -207,14 +210,14 @@ export class StraightFlush extends RankedHand {
    * scoring structure of the hand.
    */
   constructor(matchingCards: Card[]) {
-    super(HandRank.STRAIGHTFLUSH, matchingCards);
+    super(PokerHandRank.STRAIGHTFLUSH, matchingCards);
   }
 }
 
 /**
  * Poker hand representing a hand that contains a four of a kind.
  */
-export class FourOfAKind extends RankedHand {
+export class FourOfAKind extends PokerHand {
   /**
    * Create a FourOfAKind poker hand from a hand of cards if possible.
    * @param hand The hand of cards to extract FourOfAKind from.
@@ -224,7 +227,7 @@ export class FourOfAKind extends RankedHand {
   static from(hand: Card[]) {
     let matches: Card[];
     for (let i = 0; i < hand.length; i++) {
-      matches = RankService.matchesInArray(hand, hand[i]);
+      matches = PokerService.matchesInArray(hand, hand[i]);
       if (matches.length > 3) {
         return new FourOfAKind(matches);
       }
@@ -254,14 +257,14 @@ export class FourOfAKind extends RankedHand {
    * scoring structure of the hand.
    */
   constructor(matchingCards: Card[]) {
-    super(HandRank.FOUROFAKIND, matchingCards);
+    super(PokerHandRank.FOUROFAKIND, matchingCards);
   }
 }
 
 /**
  * Poker hand representing a hand that contains a full house.
  */
-export class FullHouse extends RankedHand {
+export class FullHouse extends PokerHand {
   /**
    * Create a FourOfAKind poker hand from a hand of cards if possible.
    * @param hand The hand of cards to extract FourOfAKind from.
@@ -325,14 +328,14 @@ export class FullHouse extends RankedHand {
    * structure of the hand.
    */
   constructor(matchingCards: Card[]) {
-    super(HandRank.FULLHOUSE, matchingCards);
+    super(PokerHandRank.FULLHOUSE, matchingCards);
   }
 }
 
 /**
  * Poker hand representing a hand that contains a flush.
  */
-export class Flush extends RankedHand {
+export class Flush extends PokerHand {
   /**
    * Create a Flush poker hand from a hand of cards if possible.
    * @param hand The hand of cards to extract Flush from.
@@ -363,14 +366,14 @@ export class Flush extends RankedHand {
    * structure of the hand.
    */
   constructor(matchingCards: Card[]) {
-    super(HandRank.FLUSH, matchingCards);
+    super(PokerHandRank.FLUSH, matchingCards);
   }
 }
 
 /**
  * Poker hand representing a hand that contains a straight.
  */
-export class Straight extends RankedHand {
+export class Straight extends PokerHand {
   /**
    * Create a Straight poker hand from a hand of cards if possible.
    * @param hand The hand of cards to extract Straight from.
@@ -386,7 +389,7 @@ export class Straight extends RankedHand {
      * If this holds true for all cards in hand, we have found our
      * Straight.
      */
-    const orderedHand = [...hand].sort(RankService.compareRanks);
+    const orderedHand = [...hand].sort(PokerService.compareRanks);
     let failedStraight = false;
     let hasAce = false;
     for (let i = 1; i < hand.length; i++) {
@@ -409,7 +412,7 @@ export class Straight extends RankedHand {
      * have a Straight we will return it and if not we return null.
      */
     if (failedStraight && hasAce) {
-      const aceLowOrderedHand = [...hand].sort(RankService.compareRanksAceLow);
+      const aceLowOrderedHand = [...hand].sort(PokerService.compareRanksAceLow);
       for (let i = 1; i < aceLowOrderedHand.length; i++) {
         const lastRank = aceLowOrderedHand[i - 1].rank;
         const rank = aceLowOrderedHand[i].rank;
@@ -448,14 +451,14 @@ export class Straight extends RankedHand {
    * structure of the hand.
    */
   constructor(matchingCards: Card[]) {
-    super(HandRank.STRAIGHT, matchingCards);
+    super(PokerHandRank.STRAIGHT, matchingCards);
   }
 }
 
 /**
  * Poker hand representing a hand that contains a three of a kind.
  */
-export class ThreeOfAKind extends RankedHand {
+export class ThreeOfAKind extends PokerHand {
   /**
    * Create a ThreeOfAKind poker hand from a hand of cards if possible.
    * @param hand The hand of cards to extract ThreeOfAKind from.
@@ -465,7 +468,7 @@ export class ThreeOfAKind extends RankedHand {
   static from(hand: Card[]): ThreeOfAKind | null {
     let matches: Card[];
     for (let i = 0; i < hand.length; i++) {
-      matches = RankService.matchesInArray(hand, hand[i]);
+      matches = PokerService.matchesInArray(hand, hand[i]);
       if (matches.length > 2) {
         return new ThreeOfAKind(matches);
       }
@@ -494,14 +497,14 @@ export class ThreeOfAKind extends RankedHand {
    * structure of the hand.
    */
   constructor(matchingCards: Card[]) {
-    super(HandRank.THREEOFAKIND, matchingCards);
+    super(PokerHandRank.THREEOFAKIND, matchingCards);
   }
 }
 
 /**
  * Poker hand representing a hand that contains a two pair.
  */
-export class TwoPair extends RankedHand {
+export class TwoPair extends PokerHand {
   /**
    * Create a TwoPair poker hand from a hand of cards if possible.
    * @param hand The hand of cards to extract TwoPair from.
@@ -525,7 +528,7 @@ export class TwoPair extends RankedHand {
    */
   public get of(): [CardRank, CardRank] {
     return [this.matchingCards[0], this.matchingCards[2]]
-      .sort((a, b) => RankService.compareRanks(b, a))
+      .sort((a, b) => PokerService.compareRanks(b, a))
       .map((c) => c.rank) as [CardRank, CardRank];
   }
 
@@ -549,11 +552,11 @@ export class TwoPair extends RankedHand {
    * structure of the hand.
    */
   constructor(matchingCards: Card[]) {
-    super(HandRank.TWOPAIR, matchingCards);
+    super(PokerHandRank.TWOPAIR, matchingCards);
   }
 }
 
 // TODO: document this
 export interface RankedHandFactory {
-  from(hand: ReadonlyArray<Card>): RankedHand | null;
+  from(hand: ReadonlyArray<Card>): PokerHand | null;
 }

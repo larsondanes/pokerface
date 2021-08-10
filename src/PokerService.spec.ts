@@ -10,13 +10,13 @@ import {
   StraightFlush,
   ThreeOfAKind,
   TwoPair,
-} from "./RankedHand";
-import { RankService } from "./RankService";
+} from "./PokerHand";
+import { PokerService } from "./PokerService";
 
 describe("class:RankService", () => {
   describe("static:createDeck()", () => {
     it("returns a deck of 52 cards", () => {
-      const deck = RankService.createDeck();
+      const deck = PokerService.createDeck();
       expect(deck).toHaveLength(52);
     });
   });
@@ -29,7 +29,7 @@ describe("class:RankService", () => {
         [CardRank.EIGHT, Suit.Heart],
         [CardRank.ACE, Suit.Diamond],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(HighCard);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(`"High card, A"`);
     });
@@ -42,7 +42,7 @@ describe("class:RankService", () => {
         [CardRank.FIVE, Suit.Spade],
       ]);
 
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(Pair);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(`"Pair, 5s"`);
     });
@@ -54,7 +54,7 @@ describe("class:RankService", () => {
         [CardRank.EIGHT, Suit.Heart],
         [CardRank.EIGHT, Suit.Diamond],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(TwoPair);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
         `"Two pair, 8s and 2s"`
@@ -68,7 +68,7 @@ describe("class:RankService", () => {
         [CardRank.ACE, Suit.Heart],
         [CardRank.TWO, Suit.Diamond],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(ThreeOfAKind);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
         `"Three of a kind, 2s"`
@@ -82,7 +82,7 @@ describe("class:RankService", () => {
         [CardRank.FIVE, Suit.Heart],
         [CardRank.SIX, Suit.Spade],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(Straight);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
         `"Straight, 7 high"`
@@ -96,7 +96,7 @@ describe("class:RankService", () => {
         [CardRank.ACE, Suit.Heart],
         [CardRank.KING, Suit.Spade],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(Straight);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
         `"Straight, A high"`
@@ -110,7 +110,7 @@ describe("class:RankService", () => {
         [CardRank.FIVE, Suit.Heart],
         [CardRank.ACE, Suit.Spade],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(Straight);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
         `"Straight, 5 high"`
@@ -124,7 +124,7 @@ describe("class:RankService", () => {
         [CardRank.FIVE, Suit.Club],
         [CardRank.SIX, Suit.Club],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(Flush);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(`"Flush, Clubs"`);
     });
@@ -136,7 +136,7 @@ describe("class:RankService", () => {
         [CardRank.THREE, Suit.Heart],
         [CardRank.THREE, Suit.Spade],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(FullHouse);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
         `"Full House, 3s full of 2s"`
@@ -150,7 +150,7 @@ describe("class:RankService", () => {
         [CardRank.TWO, Suit.Heart],
         [CardRank.TWO, Suit.Spade],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(FullHouse);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
         `"Full House, 3s full of 2s"`
@@ -164,7 +164,7 @@ describe("class:RankService", () => {
         [CardRank.TWO, Suit.Heart],
         [CardRank.TWO, Suit.Diamond],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(FourOfAKind);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
         `"Four of a kind, 2s"`
@@ -178,7 +178,7 @@ describe("class:RankService", () => {
         [CardRank.FIVE, Suit.Heart],
         [CardRank.SIX, Suit.Heart],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(StraightFlush);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
         `"Straight Flush, Hearts, 6 high"`
@@ -192,7 +192,7 @@ describe("class:RankService", () => {
         [CardRank.JACK, Suit.Heart],
         [CardRank.TEN, Suit.Heart],
       ]);
-      const rankedHand = RankService.rankHand(hand);
+      const rankedHand = PokerService.rankHand(hand);
       expect(rankedHand).toBeInstanceOf(RoyalFlush);
       expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
         `"Royal Flush, Hearts"`

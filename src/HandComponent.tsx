@@ -2,12 +2,12 @@ import React from "react";
 import { FunctionComponent } from "react";
 import { Card } from "./Card";
 import { CardComponent } from "./CardComponent";
-import { RankedHand } from "./RankedHand";
+import { PokerHand } from "./PokerHand";
 import "./hand.scss";
 
 interface HandProps {
   cards: ReadonlyArray<Card>;
-  rankedHand: RankedHand | null;
+  rankedHand: PokerHand | null;
 };
 
 export const HandComponent: FunctionComponent<HandProps> = ({ cards, rankedHand }) => {

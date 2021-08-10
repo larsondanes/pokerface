@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { render } from "react-dom";
-import { RankService } from "./RankService";
+import { PokerService } from "./PokerService";
 import { DrawHandButton } from "./DrawHandButton";
 import { HandComponent } from "./HandComponent";
-import { RankedHand } from "./RankedHand";
+import { PokerHand } from "./PokerHand";
 import { CustomHandInput } from "./CustomHandInput";
 import { Card } from "./Card";
 
@@ -12,19 +12,19 @@ render(<App />, document.getElementById("root"));
 
 function App() {
   const [hand, setHand] = useState<ReadonlyArray<Card>>([]);
-  const [rankedHand, setRankedHand] = useState<RankedHand | null>(null);
+  const [rankedHand, setRankedHand] = useState<PokerHand | null>(null);
 
   useEffect(() =>{
     if (hand.length) {
-      setRankedHand(RankService.rankHand(hand));
+      setRankedHand(PokerService.rankHand(hand));
     } else {
       setRankedHand(null);
     }
   }, [hand])
 
   const drawAndRankHand = () => {
-    const deck = RankService.createDeck();
-    const hand = RankService.drawHand(deck);
+    const deck = PokerService.createDeck();
+    const hand = PokerService.drawHand(deck);
     setHand(hand);
   }
 
