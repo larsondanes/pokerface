@@ -15,6 +15,8 @@ const CardComponent: FunctionComponent<{ card: Card }> = ({ card }) => {
 }
 
 const getCardSymbolColumns = (rank: CardRank): [number, number, number] => {
+  // array of columns, each column is a number indicating how many
+  // symbols should be displayed in that column
   const cardDisplays: Partial<Record<CardRank, [number, number, number]>> = {
     [CardRank.TWO]: [0, 2, 0],
     [CardRank.THREE]: [0, 3, 0],
@@ -33,10 +35,7 @@ const getCardSymbolColumns = (rank: CardRank): [number, number, number] => {
     // face cards
     return [0,1,0];
   }
-
 }
-
-
 
 const getSuitSymbol = (suit: Suit): string => {
   const suitSymbols: Record<Suit, string> = {
@@ -62,26 +61,15 @@ const getHandRankString = (rank: HandRank): string => {
     [HandRank.STRAIGHTFLUSH]: "Straight Flush",
     [HandRank.ROYALFLUSH]: "Royal Flush"
   }
-
   return handRankMapping[rank];
 }
 
 export const HandComponent: FunctionComponent<HandProps> = ({ cards, rankedHand }) => {
-  let markup: React.ReactElement[] = [];
-  //markup.push(<div className={`card card--${card.suit} card--rank-${card.rank}`} ></div>);
-
   const desiredOutputExample = ({ rank, suit }: Card) => {
-    // array of columns, each column is a number indicating how many
-    // symbols should be displayed in that column
-    // TODO: generate this based on rank and stuff
-    // TODO: Move suits to enum
-    //const symbol = suitSymbols[suit as keyof typeof suitSymbols];
     const symbol = getSuitSymbol(suit);
     const cardDisplay = getCardSymbolColumns(rank);
 
     if (rank > 10) {
-      // TODO: Handle face cards
-      const diff = rank - 10;
       return (
         <div className={`card card--${suit} card--rank-${rank}`}>
           <div className="card__topleft">{getCardRankDisplay(rank)} {symbol}</div>
@@ -92,11 +80,11 @@ export const HandComponent: FunctionComponent<HandProps> = ({ cards, rankedHand 
       </div>
       );
     }
+
     return (
       <div className={`card card--${suit} card--rank-${rank}`}>
         <div className="card__topleft">{rank} {symbol}</div>
         <div className="card__inner card__inner--centered">
-
           {
             cardDisplay.map(numSymbolsInColumn =>
               // TODO: give key
@@ -108,7 +96,6 @@ export const HandComponent: FunctionComponent<HandProps> = ({ cards, rankedHand 
               </div>
             )
           }
-
         </div>
         <div className="card__botright">{rank} {symbol}</div>
       </div>
