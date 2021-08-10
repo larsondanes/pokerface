@@ -142,6 +142,20 @@ describe("class:RankService", () => {
         `"Full House, 3s full of 2s"`
       );
     });
+    it("ranks a full house with 3oak first", () => {
+      const hand = toCards([
+        [CardRank.THREE, Suit.Club],
+        [CardRank.THREE, Suit.Heart],
+        [CardRank.THREE, Suit.Spade],
+        [CardRank.TWO, Suit.Heart],
+        [CardRank.TWO, Suit.Spade],
+      ]);
+      const rankedHand = RankService.rankHand(hand);
+      expect(rankedHand).toBeInstanceOf(FullHouse);
+      expect(rankedHand.getDisplay()).toMatchInlineSnapshot(
+        `"Full House, 3s full of 2s"`
+      );
+    });
     it("ranks a 4oak", () => {
       const hand = toCards([
         [CardRank.TWO, Suit.Heart],

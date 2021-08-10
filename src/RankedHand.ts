@@ -269,14 +269,12 @@ export class FullHouse extends RankedHand {
    * otherwise null.
    */
   static from(hand: Card[]) {
-    // TODO: consume ThreeOfAKind before Pair.
-    // also write a test to capture this first.
-    const pair = Pair.from(hand);
-    if (pair) {
-      const { matchingCards } = pair;
+    const threeOfAKind = ThreeOfAKind.from(hand);
+    if (threeOfAKind) {
+      const { matchingCards } = threeOfAKind;
       let filteredHand = hand.filter((card) => !matchingCards.includes(card));
-      let threeOfAKind = ThreeOfAKind.from(filteredHand);
-      if (threeOfAKind) {
+      const pair = Pair.from(filteredHand);
+      if (pair) {
         return new FullHouse([
           ...threeOfAKind.matchingCards,
           ...pair.matchingCards,
