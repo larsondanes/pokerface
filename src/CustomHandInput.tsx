@@ -1,7 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import * as React from "react";
-import { CardRank, Suit } from "./Card";
-import { Card } from "./RankService";
+import { Card, CardRank, Suit } from "./Card";
 
 export interface CustomHandInputProps {
   onDraw: (hand: Card[]) => void

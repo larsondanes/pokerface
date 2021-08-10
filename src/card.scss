@@ -12,148 +12,144 @@ $card-color-black: #252525;
 $card-symbol-size: 40px;
 
 .card {
-    height: 300px;
-    width: 200px;
-    border: 1px solid red;
-    box-sizing: border-box;
-    display: inline-block;
-    margin: 5px;
+  height: 300px;
+  width: 200px;
+  border: 1px solid red;
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 5px;
+  text-align: center;
+  position: relative;
+
+  .card__topleft,
+  .card__botright {
+    position: absolute;
+    width: 12px;
     text-align: center;
-    position: relative;
+    letter-spacing: -2px;
+  }
 
-    .card__topleft,
-    .card__botright {
-        position: absolute;
-        width: 12px;
-        text-align: center;
-        letter-spacing: -2px;
-    }
+  .card__topleft {
+    top: $card-padding;
+    left: $card-padding;
+  }
 
-    .card__topleft {
-        top: $card-padding;
-        left: $card-padding;
-    }
-
-    .card__botright {
-        bottom: $card-padding;
-        right: $card-padding;
-        transform: rotate(180deg)
-    }
-}
-
-.handRank {
-    margin: 5px;
+  .card__botright {
+    bottom: $card-padding;
+    right: $card-padding;
+    transform: rotate(180deg);
+  }
 }
 
 button {
-    margin: 5px;
+  margin: 5px;
 }
 
 body {
-	padding: 0;
-	margin: 0;
-	background: $background;
+  padding: 0;
+  margin: 0;
+  background: $background;
 }
 
 .cards {
-	text-align: center;
-	max-width: 640px;
-	margin: 0 auto;
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .card {
-	position: relative;
-	display: inline-block;
-	width: $card-width;
-	height: $card-height;
-	font: $font-size 'Trebuchet MS';
-	
-	margin: $gutter;
-	border-radius: $card-padding;
-	background: $card-background;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
-	
-	&--heart {
-		color: $card-color-red;
-	}
-	
-	&--spade {
-		color: $card-color-black;
-	}
+  position: relative;
+  display: inline-block;
+  width: $card-width;
+  height: $card-height;
+  font: $font-size "Trebuchet MS";
 
-    &--diamond {
-		color: $card-color-red;
-	}
-	
-	&--club {
-		color: $card-color-black;
-	}
+  margin: $gutter;
+  border-radius: $card-padding;
+  background: $card-background;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+
+  &--heart {
+    color: $card-color-red;
+  }
+
+  &--spade {
+    color: $card-color-black;
+  }
+
+  &--diamond {
+    color: $card-color-red;
+  }
+
+  &--club {
+    color: $card-color-black;
+  }
 }
 
 .card__inner {
-	box-sizing: border-box;
-	position: absolute;
-	display: flex;
-	justify-content: space-between;
-	top: 6 * $card-padding;
-	left: 6 * $card-padding;
-	right: 6 * $card-padding;
-	bottom: 6 * $card-padding;
-	
-	&--centered {
-		justify-content: center;
-	}
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  top: 6 * $card-padding;
+  left: 6 * $card-padding;
+  right: 6 * $card-padding;
+  bottom: 6 * $card-padding;
+
+  &--centered {
+    justify-content: center;
+  }
 }
 
 .card__column {
-	display: flex;
-	flex-direction: column;
-	//justify-content: space-between;
-    justify-content: center;
-    align-items: center;
-	
-	// &--centered {
-	// 	justify-content: center;
-	// }
+  display: flex;
+  flex-direction: column;
+  //justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+
+  // &--centered {
+  // 	justify-content: center;
+  // }
 }
 
 .card__column.face {
-    font-size: 72;
+  font-size: 72;
 }
 
 .card__symbol {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
 
-	//display: inline-block;
-	height: $card-symbol-size;
-	text-align: center;
-	
-	font-size: $card-symbol-size;
-	line-height: $card-symbol-size;
-	
-	&--rotated,
-	&:last-of-type {
-		transform: rotate(180deg);
-	}
-	
-	&:first-of-type {
-		transform: rotate(0);
-	}
-	
-	&--big {
-		flex-basis: 0.25 * $card-height;
-	}
-	
-	&--huge {
-		flex-basis: 0.45 * $card-height;
-	}
+  //display: inline-block;
+  height: $card-symbol-size;
+  text-align: center;
+
+  font-size: $card-symbol-size;
+  line-height: $card-symbol-size;
+
+  &--rotated,
+  &:last-of-type {
+    transform: rotate(180deg);
+  }
+
+  &:first-of-type {
+    transform: rotate(0);
+  }
+
+  &--big {
+    flex-basis: 0.25 * $card-height;
+  }
+
+  &--huge {
+    flex-basis: 0.45 * $card-height;
+  }
 }
 
 .title {
-	font: 18px 'Trebuchet MS';
-	color: #444;
-	text-align: center;
+  font: 18px "Trebuchet MS";
+  color: #444;
+  text-align: center;
 }

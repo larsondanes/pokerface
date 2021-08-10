@@ -1,11 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { render } from "react-dom";
-import { RankService, Card } from "./RankService";
+import { RankService } from "./RankService";
 import { DrawHandButton } from "./DrawHandButton";
 import { HandComponent } from "./HandComponent";
 import { RankedHand } from "./RankedHand";
 import { CustomHandInput } from "./CustomHandInput";
+import { Card } from "./Card";
 
 render(<App />, document.getElementById("root"));
 

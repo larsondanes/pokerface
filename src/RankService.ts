@@ -1,5 +1,4 @@
-import * as React from "react";
-import { allRanks, CardRank, Suit, suits } from "./Card";
+import { Card, allRanks, CardRank, suits } from "./Card";
 import {
   Flush,
   FourOfAKind,
@@ -14,20 +13,6 @@ import {
   ThreeOfAKind,
   TwoPair,
 } from "./RankedHand";
-
-/**
- * Describes a Card object.
- */
-export interface Card {
-  /**
-   * rank is expected to be a member of CardRank.
-   */
-  rank: CardRank;
-  /**
-   * suit is expected to be a member of Suit.
-   */
-  suit: Suit;
-}
 
 /**
  * Assigns numerical value to hand kinds.

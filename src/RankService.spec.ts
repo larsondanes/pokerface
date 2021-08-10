@@ -1,4 +1,4 @@
-import { CardRank, Suit } from "./Card";
+import { Card, CardRank, Suit } from "./Card";
 import {
   Flush,
   FourOfAKind,
@@ -11,7 +11,7 @@ import {
   ThreeOfAKind,
   TwoPair,
 } from "./RankedHand";
-import { Card, HandRank, RankService } from "./RankService";
+import { RankService } from "./RankService";
 
 describe("class:RankService", () => {
   describe("static:createDeck()", () => {

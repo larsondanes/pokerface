@@ -1,5 +1,5 @@
-import { CardRank, getCardRankDisplay, Suit } from "./Card";
-import { Card, HandRank, RankService } from "./RankService";
+import { Card, CardRank, getCardRankDisplay, Suit } from "./Card";
+import { HandRank, RankService } from "./RankService";
 
 const titleCase = (str: string) => str[0].toUpperCase() + str.substr(1);
 
