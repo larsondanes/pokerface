@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
-import { CardRank, Suit, getCardRankDisplay, Card } from "./Card";
+import { CardRank, Suit, getCardRankDisplay, Card } from "../poker/Card";
 import "./card.scss";
 
 const getCardSymbolColumns = (rank: CardRank): [number, number, number] => {

@@ -1,16 +1,14 @@
 import { Card, CardRank, Suit } from "./Card";
-import {
-  Flush,
-  FourOfAKind,
-  FullHouse,
-  HighCard,
-  Pair,
-  RoyalFlush,
-  Straight,
-  StraightFlush,
-  ThreeOfAKind,
-  TwoPair,
-} from "./PokerHand";
+import { TwoPair } from "./hands/TwoPair";
+import { ThreeOfAKind } from "./hands/ThreeOfAKind";
+import { Straight } from "./hands/Straight";
+import { Flush } from "./hands/Flush";
+import { FullHouse } from "./hands/FullHouse";
+import { FourOfAKind } from "./hands/FourOfAKind";
+import { StraightFlush } from "./hands/StraightFlush";
+import { RoyalFlush } from "./hands/RoyalFlush";
+import { HighCard } from "./hands/HighCard";
+import { Pair } from "./hands/Pair";
 import { PokerService } from "./PokerService";
 
 describe("class:RankService", () => {

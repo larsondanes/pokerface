@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { render } from "react-dom";
-import { PokerService } from "./PokerService";
+import { PokerService } from "../poker/PokerService";
 import { DrawHandButton } from "./DrawHandButton";
 import { HandComponent } from "./HandComponent";
-import { PokerHand } from "./PokerHand";
+import { PokerHand } from "../poker/hands/PokerHand";
 import { CustomHandInput } from "./CustomHandInput";
-import { Card } from "./Card";
+import { Card } from "../poker/Card";
 
 render(<App />, document.getElementById("root"));
 

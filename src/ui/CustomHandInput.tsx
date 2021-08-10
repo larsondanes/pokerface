@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import * as React from "react";
-import { Card, CardRank, Suit } from "./Card";
+import { Card, CardRank, Suit } from "../poker/Card";
 import "./customHandInput.scss";
 
 export interface CustomHandInputProps {

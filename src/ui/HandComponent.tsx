@@ -1,8 +1,8 @@
 import React from "react";
 import { FunctionComponent } from "react";
-import { Card } from "./Card";
+import { Card } from "../poker/Card";
 import { CardComponent } from "./CardComponent";
-import { PokerHand } from "./PokerHand";
+import { PokerHand } from "../poker/hands/PokerHand";
 import "./hand.scss";
 
 interface HandProps {
